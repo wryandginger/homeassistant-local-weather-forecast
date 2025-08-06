@@ -41,7 +41,8 @@ cards:
           {{states.sensor.local_forecast_zambretti_detail.attributes.rain_prob[1]}}%
 
           {%if states.sensor.local_forecast.attributes.forecast_temp_short[1] ==
-          1%}{{states.sensor.local_forecast.attributes.forecast_temp_short[0]}}°C{%endif%}
+          1%}{{states.sensor.local_forecast.attributes.forecast_temp_short[0]}}*1.8
+          +32)|round(1)}}°F{%endif%}
         icon: "{{states.sensor.local_forecast_zambretti_detail.attributes.icons[1]}}"
         icon_color: none
         layout: vertical
