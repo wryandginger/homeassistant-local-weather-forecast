@@ -459,7 +459,7 @@ template:
         device_class: 'temperature'
         availability: "{{ states.sensor.local_forecast.attributes.temperature | is_number }}"
         state: >
-          {{ (states.sensor.local_forecast.attributes.temperature|float(states.sensor.local_forecast_temperature.state) x 1.8) +32 }}
+          {{ ((states.sensor.local_forecast.attributes.temperature|float(states.sensor.local_forecast_temperature.state)) * 1.8) + 32 }}
 
 # The sampling_size values should add up to slightly less than the amount of sensor updates in the max_age time to work around Home Assistant's statistics integration
 # e.g. a pressure sensor that updates every ~5 seconds in 180 minutes is 2160 updates, -12.5%, gives 1890 samples
