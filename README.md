@@ -1,16 +1,9 @@
 # Homeassistant 12h local weather forecast. ~94% accurate*
-<a href="https://www.buymeacoffee.com/hauser1234" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
+This is a fork of HAuser1234/homeassistant-local-weather-forecast
+This has been adjusted to accept Temperature in Fahrenheit and wind speed in miles per hour
 
-
-<b> new Ecowitt integration released! use https://github.com/HAuser1234/HA_Ecowitt_Extended to direcly integrate your Ecowitt based weatherstation with this integration!</b>
-
-This Home Assistant integration creates sensors to forecast local weather without the need for external services.
-Therefore, it helps to get accurate weather data for the next 12h without the problem of changing services, API's, etc.
-Only a barometer as a sensor is required (can also be pulled from online). But the forecast can be made more accurate with more sensors.
-For me, the zambretti forecaster is pretty accurate, but you will have to monitor both models in order to find the better one for your location.
-
-If you like this repository please leave a star ⭐
-
+This coode assumes you're using a pressure sensor that outputs in hPa (I'm using a kmpcil res005 zigbee environmental sensor)
+You also need a weather sensor that that outputs in F and mph (I'm using an Acurite 5n1 weather station connected via rtl_433 to MQTT
 
 # Features
 * 2 Forecast Models (Zambretti, and Negretti & Zambra)
@@ -21,6 +14,8 @@ If you like this repository please leave a star ⭐
 * simple temperature forecast
 * extract general weather conditions
 * full English and German support
+*
+* (Note: Only the English lovelace card displays back in Fahrenheit. This still uses 24 hour time)
 
 # Sensors
 Following sensors can be used:
@@ -31,10 +26,6 @@ Following sensors can be used:
 
 # Card
 English and German version:
-
-![grafik](https://github.com/HAuser1234/homeassistant-local-weather-forecast/assets/122117318/3a4cb58b-617f-4a9a-8fb2-ec723a5b05c0)
-![grafik](https://github.com/HAuser1234/homeassistant-local-weather-forecast/assets/122117318/19c8220a-4bfe-4a0f-a82a-c968cbfd5b31)
-
 
 # Installation
 Please contribute ANY upgrades to the card or algorithm - this helps everybody!
@@ -54,13 +45,9 @@ homeassistant:
 * copy the card as a manual yaml config into lovelace. !mushroom required, vertical-stack-in-card required!
 * edit the current production of solar entity in the conditional cards
 
-# To-Do
-* Improve algorithms
-* Find bugs (please commit changes!)
-* Make better temperature forecast
-* Integrate maybe with a solar/battery-charge prediction tool: https://github.com/HAuser1234/Homeassistant-solar-forecast-charge-prediction
 
 # sources
+https://github.com/HAuser1234/homeassistant-local-weather-forecast
 https://github.com/sassoftware/iot-zambretti-weather-forcasting
 https://integritext.net/DrKFS/zambretti.htm
 https://www.mikrocontroller.net/topic/385242
