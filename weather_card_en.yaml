@@ -1,16 +1,17 @@
 type: custom:vertical-stack-in-card
 cards:
   - type: custom:mushroom-title-card
-    title: '{{states.sensor.local_forecast.state}}'
+    title: "{{states.sensor.local_forecast.state}}"
   - type: horizontal-stack
     cards:
       - type: custom:mushroom-template-card
-        primary: '{{states.sensor.local_forecast.attributes.forecast_short_term[0]}}'
+        primary: "{{states.sensor.local_forecast.attributes.forecast_short_term[0]}}"
         secondary: >-
           -
 
           {%if states.sensor.local_forecast.attributes.forecast_temp_short[1] >=
-          0%}{{states.sensor.local_forecast.attributes.temperature}}°C{%endif%}
+          0%}{{(((states.sensor.local_forecast.attributes.temperature) *1.8) +
+          32)|round(1)}}°F{%endif%}
         icon: mdi:weather-cloudy-clock
         icon_color: none
         layout: vertical
@@ -25,8 +26,9 @@ cards:
           {{states.sensor.local_forecast_zambretti_detail.attributes.rain_prob[0]}}%
 
           {%if states.sensor.local_forecast.attributes.forecast_temp_short[1] ==
-          0%}{{states.sensor.local_forecast.attributes.forecast_temp_short[0]}}°C{%endif%}
-        icon: '{{states.sensor.local_forecast_zambretti_detail.attributes.icons[0]}}'
+          0%}{{((states.sensor.local_forecast.attributes.forecast_temp_short[0])*1.8
+          +32)|round(1)}}°F{%endif%}
+        icon: "{{states.sensor.local_forecast_zambretti_detail.attributes.icons[0]}}"
         icon_color: none
         layout: vertical
         multiline_secondary: true
@@ -40,7 +42,7 @@ cards:
 
           {%if states.sensor.local_forecast.attributes.forecast_temp_short[1] ==
           1%}{{states.sensor.local_forecast.attributes.forecast_temp_short[0]}}°C{%endif%}
-        icon: '{{states.sensor.local_forecast_zambretti_detail.attributes.icons[1]}}'
+        icon: "{{states.sensor.local_forecast_zambretti_detail.attributes.icons[1]}}"
         icon_color: none
         layout: vertical
         multiline_secondary: true
