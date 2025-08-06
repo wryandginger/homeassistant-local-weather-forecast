@@ -1,4 +1,4 @@
-# Homeassistant 12h local weather forecast. ~94% accurate*
+# Homeassistant 12h local weather forecast. ~94% accurate*  (USA Adapted!)
 This is a fork of HAuser1234/homeassistant-local-weather-forecast
 This has been adjusted to accept Temperature in Fahrenheit and wind speed in miles per hour
 
@@ -13,9 +13,6 @@ You also need a weather sensor that that outputs in F and mph (I'm using an Acur
 * text prognosis
 * simple temperature forecast
 * extract general weather conditions
-* full English and German support
-*
-* (Note: Only the English lovelace card displays back in Fahrenheit. This still uses 24 hour time)
 
 # Sensors
 Following sensors can be used:
@@ -25,7 +22,9 @@ Following sensors can be used:
 * Wind direction (optional)
 
 # Card
-English and German version:
+* Note: Only the English lovelace card displays back in Fahrenheit. 
+* Other language cards should still work but they will output centegrade forecasts
+* This still uses 24-hour time (aka Military Time)
 
 # Installation
 Please contribute ANY upgrades to the card or algorithm - this helps everybody!
