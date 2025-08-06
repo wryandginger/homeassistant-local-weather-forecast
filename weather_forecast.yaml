@@ -12,12 +12,12 @@ template:
             {# -----> Language: 0 = German ; 1 = English  ; 2 = Ελληνικά <----- #}
             {% set language = 1%}{{language}}
           temperature: >
-            {# -----> set temperature in xx.x°C (only when pressure_sea = 0) <-----#}
-            {% set temp = states.sensor.weatherstation_temperature.state|float(1)%}
+            {# -----> set temperature in xx.x°F (only when pressure_sea = 0) <-----#}
+            {% set temp = (states.sensor.acurite_5n1_a_987_temperature.state|float(1) -32) * 5/9 %}
             {{temp}}
           p0: >
             {# -----> pressure sensor in xxxx.xxhPa (needed) <----- #}
-            {% set pressure = states.sensor.weatherstation_barometer_absolute.state|float(0)%}
+            {% set pressure = states.sensor.kmpcil_res005_pressure.state|float(0)%}
 
             {# -----> pressure at sealevel: set to 1 else set to 0 (needed) <-----#}
             {% set pressure_sea = 0%}
@@ -26,15 +26,15 @@ template:
             {% set height = 370%}
 
             {# Calc pressure at sealevel -> p0 (if necessary)#}
-            {% set temp = states.sensor.local_forecast.attributes.temperature|float(1)%}
+            {% set temp = (states.sensor.acurite_5n1_a_987_temperature.state|float(1) -32) * 5/9 %}
             {% set p0 = pressure*pressure_sea-(pressure_sea-1)*pressure*(1-((0.0065*height)/(temp+(0.0065*height)+273.15)))**(-5.257)%}
             {{p0|round(1)}}
           wind_direction: >
             {# -----> set wind direction in degrees (optional, else 0) <----- #}
-            {% set wind_dir = states.sensor.weatherstation_wind_direction.state|int(0)%}
+            {% set wind_dir = states.sensor.acurite_5n1_a_987_wd.state|int(0)%}
 
             {# -----> set average wind speed in km/h (optional, else 0) <----- #}
-            {%set wind_speed = states.sensor.weatherstation_wind_speed.state|float(0)%}
+            {%set wind_speed = (states.sensor.acurite_5n1_a_987_wind_average.state|float(0)) * 1.609344 %}
 
 
             {# ----------------------------------------------- Config end ----------------------------------------------- #}
