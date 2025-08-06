@@ -9,8 +9,8 @@ cards:
         secondary: >-
           -
 
-          {%if states.sensor.local_forecast.attributes.forecast_temp_short[1] >=
-          0%}{{(((states.sensor.local_forecast.attributes.temperature) *1.8) +
+          {%if (((states.sensor.local_forecast.attributes.forecast_temp_short[1]) *1.8) + 32) >=
+          32%}{{(((states.sensor.local_forecast.attributes.temperature) *1.8) +
           32)|round(1)}}°F{%endif%}
         icon: mdi:weather-cloudy-clock
         icon_color: none
@@ -24,8 +24,8 @@ cards:
           Rain:
           {{states.sensor.local_forecast_zambretti_detail.attributes.rain_prob[0]}}%
 
-          {%if states.sensor.local_forecast.attributes.forecast_temp_short[1] ==
-          0%}{{((states.sensor.local_forecast.attributes.forecast_temp_short[0])*1.8
+          {%if (((states.sensor.local_forecast.attributes.forecast_temp_short[1]) *1.8) + 32) ==
+          32%}{{((states.sensor.local_forecast.attributes.forecast_temp_short[0])*1.8
           +32)|round(1)}}°F{%endif%}
         icon: "{{states.sensor.local_forecast_zambretti_detail.attributes.icons[0]}}"
         icon_color: none
@@ -39,7 +39,7 @@ cards:
           Rain:
           {{states.sensor.local_forecast_zambretti_detail.attributes.rain_prob[1]}}%
 
-          {%if states.sensor.local_forecast.attributes.forecast_temp_short[1] ==
+          {%if (((states.sensor.local_forecast.attributes.forecast_temp_short[1]) *1.8) + 32) ==
           1%}{{states.sensor.local_forecast.attributes.forecast_temp_short[0]}}*1.8
           +32)|round(1)}}°F{%endif%}
         icon: "{{states.sensor.local_forecast_zambretti_detail.attributes.icons[1]}}"
