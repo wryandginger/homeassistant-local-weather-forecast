@@ -24,7 +24,8 @@ Following sensors can be used:
 # Card
 * Note: Only the English lovelace card displays back in Fahrenheit. 
 * Other language cards should still work but they will output centegrade forecasts
-* This still uses 24-hour time (aka Military Time)
+* weather_card_en.yaml outputs in 24-hour time (aka Military Time)
+* weather_card_en_12hr.yaml gives you the AM and PM goodness of 12-hour time
 
 # Installation
 Please contribute ANY upgrades to the card or algorithm - this helps everybody!
@@ -46,13 +47,12 @@ homeassistant:
 
 
 # sources
-https://github.com/HAuser1234/homeassistant-local-weather-forecast
-https://github.com/sassoftware/iot-zambretti-weather-forcasting
-https://integritext.net/DrKFS/zambretti.htm
-https://www.mikrocontroller.net/topic/385242
-http://www.beteljuice.co.uk/zambretti/forecast.html
-
-.* 94% according to https://github.com/sassoftware/iot-zambretti-weather-forcasting
+* https://github.com/HAuser1234/homeassistant-local-weather-forecast
+* https://github.com/sassoftware/iot-zambretti-weather-forcasting
+* https://integritext.net/DrKFS/zambretti.htm
+* https://www.mikrocontroller.net/topic/385242
+* http://www.beteljuice.co.uk/zambretti/forecast.html
+* .* 94% according to https://github.com/sassoftware/iot-zambretti-weather-forcasting
 _
 
 THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
