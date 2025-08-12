@@ -5,44 +5,48 @@ cards:
   - type: horizontal-stack
     cards:
       - type: custom:mushroom-template-card
-        primary: "{{states.sensor.local_forecast.attributes.forecast_short_term[0]}}"
+        primary: "Now: {{(as_timestamp(now())) | timestamp_custom('%I:%M %p')}}"
         secondary: >-
-          -
+          {{states.sensor.local_forecast_currently_imperial.attributes.condition
+          | replace("-"," ")}}
 
-          {%if (((states.sensor.local_forecast.attributes.forecast_temp_short[1]) *1.8) + 32) >=
-          32%}{{(((states.sensor.local_forecast.attributes.temperature) *1.8) +
-          32)|round(1)}}°F{%endif%}
-        icon: mdi:weather-cloudy-clock
+          {{(((states.sensor.local_forecast.attributes.temperature) *1.8) +
+          32)|round(1)}}°F
+        icon: "{{states.sensor.local_forecast_currently_imperial.attributes.icon}}"
         icon_color: none
         layout: vertical
         multiline_secondary: true
       - type: custom:mushroom-template-card
-        primary: >-
-          ~
-          {{as_timestamp(strptime(states.sensor.local_forecast_zambretti_detail.attributes.first_time[0], '%H:%M')) | timestamp_custom('%-I:%M %p') }}
+        primary: "{{states.sensor.local_forecast_3_hour_imperial.attributes.time}}"
         secondary: >-
           Rain:
-          {{states.sensor.local_forecast_zambretti_detail.attributes.rain_prob[0]}}%
+          {{states.sensor.local_forecast_3_hour_imperial.attributes.chance_rain}} 
 
-          {%if (((states.sensor.local_forecast.attributes.forecast_temp_short[1]) *1.8) + 32) ==
-          32%}{{((states.sensor.local_forecast.attributes.forecast_temp_short[0])*1.8
-          +32)|round(1)}}°F{%endif%}
-        icon: "{{states.sensor.local_forecast_zambretti_detail.attributes.icons[0]}}"
+          {{states.sensor.local_forecast_3_hour_imperial.state}}°F
+        icon: "{{states.sensor.local_forecast_3_hour_imperial.attributes.icon}}"
         icon_color: none
         layout: vertical
         multiline_secondary: true
       - type: custom:mushroom-template-card
-        primary: >-
-          ~
-          {{as_timestamp(strptime(states.sensor.local_forecast_zambretti_detail.attributes.second_time[0], '%H:%M')) | timestamp_custom('%-I:%M %p') }}
+        primary: "{{states.sensor.local_forecast_6_hour_imperial.attributes.time}}"
         secondary: >-
           Rain:
-          {{states.sensor.local_forecast_zambretti_detail.attributes.rain_prob[1]}}%
+          {{states.sensor.local_forecast_6_hour_imperial.attributes.chance_rain}} 
 
-          {%if (((states.sensor.local_forecast.attributes.forecast_temp_short[1]) *1.8) + 32) ==
-          1%}{{states.sensor.local_forecast.attributes.forecast_temp_short[0]}}*1.8
-          +32)|round(1)}}°F{%endif%}
-        icon: "{{states.sensor.local_forecast_zambretti_detail.attributes.icons[1]}}"
+          {{states.sensor.local_forecast_6_hour_imperial.state}}°F
+        icon: "{{states.sensor.local_forecast_6_hour_imperial.attributes.icon}}"
+        icon_color: none
+        layout: vertical
+        multiline_secondary: true
+      - type: custom:mushroom-template-card
+        primary: "{{(as_timestamp(now())+43200) | timestamp_custom('%I:%M %p')}}"
+        secondary: >-
+          Rain:
+          {{states.sensor.local_forecast_6_hour_imperial.attributes.chance_rain}} 
+
+          {{states.sensor.local_forecast_6_hour_imperial.attributes.later_temp}}°F
+        icon: >-
+          {{states.sensor.local_forecast_neg_zam_detail.attributes.invert_icons[1]}}
         icon_color: none
         layout: vertical
         multiline_secondary: true
