@@ -1,6 +1,11 @@
-# Homeassistant 12h local weather forecast. ~94% accurate*  (USA Adapted!)
+# Homeassistant 12h local weather forecast. ~94% accurate*  (USA Adapted and Enhanced!)
 This is a fork of HAuser1234/homeassistant-local-weather-forecast
-This has been adjusted to accept Temperature in Fahrenheit and wind speed in miles per hour
+This has been adjusted to accept temperature in Fahrenheit, wind speed in miles per hour, and displays in 12 hour time format.
+
+Enhancements:
+I also break out the forecast across 3, 6, and 12 hours which seems to be accurate for my area. 
+I load an "inverted" font at the 12 hour forecast to anticipate the sun level in 12 hours.
+I provide a 3, 6, and 12 hour temperature forcast based on the trend. It's fairly accurate (+/- 3 degrees) based on my own sensor data.
 
 This coode assumes you're using a pressure sensor that outputs in hPa (I'm using a kmpcil res005 zigbee environmental sensor)
 You also need a weather sensor that that outputs in F and mph (I'm using an Acurite 5n1 weather station connected via rtl_433 to MQTT
@@ -24,8 +29,8 @@ Following sensors can be used:
 # Card
 * Note: Only the English lovelace card displays back in Fahrenheit. 
 * Other language cards should still work but they will output centegrade forecasts
-* weather_card_en.yaml outputs in 24-hour time (aka Military Time)
-* weather_card_en_12hr.yaml gives you the AM and PM goodness of 12-hour time
+* weather_card_en.yaml outputs in 24-hour time and has no changes to the forecast data from the original repo.
+* weather_card_en_12hr.yaml is the file with the enhancements I made. (see above)
 
 # Installation
 Please contribute ANY upgrades to the card or algorithm - this helps everybody!
