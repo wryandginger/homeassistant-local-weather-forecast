@@ -4,7 +4,7 @@ template:
       - name: Local forecast
         state: >
           {# -----> Language: 0 = German ; 1 = English  ; 2 = Ελληνικά <----- #}
-          {%set title = ["Lokale Wettervorhersage","12hr Local Weather Forecast","Τοπική πρόγνωση καιρού"]%}
+          {%set title = ["Lokale Wettervorhersage","Local Weather Forecast","Τοπική πρόγνωση καιρού"]%}
           {{title[1]}}
 
         attributes:
@@ -23,7 +23,7 @@ template:
             {% set pressure_sea = 0%}
 
             {# -----> set height above sealevel in meters (only when pressure_sea = 0) <-----#}
-            {% set height = 370%}
+            {% set height = 52%}
 
             {# Calc pressure at sealevel -> p0 (if necessary)#}
             {% set temp = (states.sensor.acurite_5n1_a_987_temperature.state|float(1) -32) * 5/9 %}
@@ -34,7 +34,7 @@ template:
             {% set wind_dir = states.sensor.acurite_5n1_a_987_wd.state|int(0)%}
 
             {# -----> set average wind speed in mph (optional, else 0) <----- #}
-            {%set wind_speed = ((states.sensor.acurite_5n1_a_987_wind_average.state|float(0)) * 1.609344)|round(1) %}
+            {%set wind_speed = (((states.sensor.acurite_5n1_a_987_wind_average.state|float(0)) * 1.609344)|round(1)) %}
 
 
             {# ----------------------------------------------- Config end ----------------------------------------------- #}
@@ -74,7 +74,7 @@ template:
           forecast_short_term: >
             {# Calc. current conditions #}
             {%set language = states.sensor.local_forecast.attributes.language|int(0)%}
-            {%set conditions = [('stürmisch','Stormy','θυελλώδης','Tempestoso'),('regnerisch','Rainy','Βροχερός','Piovoso'),('wechselhaft','Mixed','Μεταβλητός','Variabile'),('sonnig','Sunny','Ηλιόλουστος','Soleggiato'),('sehr trocken','Extra Dry','Πολύ ξηρός','Molto Secco')]%}
+            {%set conditions = [('stürmisch','Stormy','θυελλώδης','Tempestoso'),('regnerisch','Rainy','Βροχερός','Piovoso'),('wechselhaft','Partly-Cloudy','Μεταβλητός','Variabile'),('sonnig','Sunny','Ηλιόλουστος','Soleggiato'),('sehr trocken','Dry','Πολύ ξηρός','Molto Secco')]%}
             {%set pressure_system = [('Tiefdruckgebiet','Low Pressure System','σύστημα χαμηλής πίεσης','Bassa Pressione'),('Normal','Normal','φυσιολογικός','Normale'),('Hochdruckgebiet','High Pressure System','σύστημα υψηλής πίεσης','Zona Alta Pressione')]%}
             {%set p0 = states.sensor.local_forecast.attributes.p0|float(0)%}
             {% if p0<980 %}
@@ -303,6 +303,8 @@ template:
             {%else%}{%set t_forecast = "unavailable"%}{%set interval = -1%}{%endif%}
             {{[t_forecast,interval]}}
 
+
+
   - sensor:
       - name: Local forecast zambretti detail
         state: >
@@ -358,6 +360,14 @@ template:
             {%set conditions = [('mdi:weather-sunny','mdi:weather-night'),('mdi:weather-partly-cloudy', 'mdi:weather-night-partly-cloudy'),('mdi:weather-partly-rainy','mdi:weather-partly-rainy'),('mdi:weather-cloudy','mdi:weather-cloudy'),('mdi:weather-rainy','mdi:weather-rainy'),('mdi:weather-pouring','mdi:weather-pouring'),('mdi:weather-lightning-rainy','mdi:weather-lightning-rainy')]%}
             {# [State][day/night], available states: sunny (0), partlycloudy(1), partlycloudyrain(2), cloudy(3), rainy(4), pouring(5), lightning-rainy(6) #}
             {%if is_state('sun.sun', 'below_horizon')==true%}{%set daynight=1%}{%else%}{%set daynight=0%}{%endif%}
+            {%set now = conditions[forecast[0]|int(0)][daynight|int(0)]%}
+            {%set later = conditions[forecast[1]|int(0)][daynight|int(0)]%}
+            {{(now,later)}}
+          invert_icons: >
+            {%set forecast = states.sensor.local_forecast_zambretti_detail.attributes.forecast%}
+            {%set conditions = [('mdi:weather-sunny','mdi:weather-night'),('mdi:weather-partly-cloudy', 'mdi:weather-night-partly-cloudy'),('mdi:weather-partly-rainy','mdi:weather-partly-rainy'),('mdi:weather-cloudy','mdi:weather-cloudy'),('mdi:weather-rainy','mdi:weather-rainy'),('mdi:weather-pouring','mdi:weather-pouring'),('mdi:weather-lightning-rainy','mdi:weather-lightning-rainy')]%}
+            {# [State][day/night], available states: sunny (0), partlycloudy(1), partlycloudyrain(2), cloudy(3), rainy(4), pouring(5), lightning-rainy(6) #}
+            {%if is_state('sun.sun', 'below_horizon')==true%}{%set daynight=0%}{%else%}{%set daynight=1%}{%endif%}
             {%set now = conditions[forecast[0]|int(0)][daynight|int(0)]%}
             {%set later = conditions[forecast[1]|int(0)][daynight|int(0)]%}
             {{(now,later)}}
@@ -429,6 +439,14 @@ template:
             {%set now = conditions[forecast[0]|int(0)][daynight|int(0)]%}
             {%set later = conditions[forecast[1]|int(0)][daynight|int(0)]%}
             {{(now,later)}}
+          invert_icons: >
+            {%set forecast = states.sensor.local_forecast_neg_zam_detail.attributes.forecast%}
+            {%set conditions = [('mdi:weather-sunny','mdi:weather-night'),('mdi:weather-partly-cloudy', 'mdi:weather-night-partly-cloudy'),('mdi:weather-partly-rainy','mdi:weather-partly-rainy'),('mdi:weather-cloudy','mdi:weather-cloudy'),('mdi:weather-rainy','mdi:weather-rainy'),('mdi:weather-pouring','mdi:weather-pouring'),('mdi:weather-lightning-rainy','mdi:weather-lightning-rainy')]%}
+            {# [State][day/night], available states: sunny (0), partlycloudy(1), partlycloudyrain(2), cloudy(3), rainy(4), pouring(5), lightning-rainy(6) #}
+            {%if is_state('sun.sun', 'below_horizon')==true%}{%set daynight=0%}{%else%}{%set daynight=1%}{%endif%}
+            {%set now = conditions[forecast[0]|int(0)][daynight|int(0)]%}
+            {%set later = conditions[forecast[1]|int(0)][daynight|int(0)]%}
+            {{(now,later)}}
           first_time: >
             {# figure out if forecast is old; if yes add 6h -> next interval #}
             {%set halftime = 6*60-(as_timestamp(now()) - as_timestamp(states.sensor.local_forecast_neg_zam_detail.last_changed))/60%}
@@ -455,11 +473,46 @@ template:
         state: >
           {{ states.sensor.local_forecast.attributes.p0|float(states.sensor.local_forecast_pressure.state) }}
       - name: Local forecast temperature
+        unit_of_measurement: "°C"
+        device_class: 'temperature'
+        availability: "{{ states.sensor.local_forecast.attributes.temperature | is_number }}"
+        state: >
+          {{ (states.sensor.local_forecast.attributes.temperature|float(states.sensor.local_forecast_temperature.state)) }}
+      - name: Local Forecast Currently (Imperial)
         unit_of_measurement: "°F"
         device_class: 'temperature'
         availability: "{{ states.sensor.local_forecast.attributes.temperature | is_number }}"
         state: >
-          {{ ((states.sensor.local_forecast.attributes.temperature|float(states.sensor.local_forecast_temperature.state)) * 1.8) + 32 }}
+          {{ (((states.sensor.local_forecast.attributes.temperature) * 1.8) + 32)| round(1) }}
+        icon: "{%if is_state('sun.sun', 'below_horizon')==false%} mdi:weather-{{(states.sensor.local_forecast.attributes.forecast_short_term.0 | lower )| replace ('dry', 'sunny') | replace ('stormy', 'lightning')}}{%else%}mdi:weather-{{(states.sensor.local_forecast.attributes.forecast_short_term.0 | lower ) | replace ('sunny','clear-night') | replace ('partly-cloudy','night-partly-cloudy')| replace ('dry', 'clear-night') | replace ('stormy', 'lightning')}}{%endif%}"
+        attributes:
+          condition: "{%if is_state('sun.sun', 'below_horizon')==false%}{{states.sensor.local_forecast.attributes.forecast_short_term.0}}{%else%}{{(states.sensor.local_forecast.attributes.forecast_short_term.0 | replace ('Sunny', 'Clear'))}}{%endif%}"
+          pressure_system: "{{states.sensor.local_forecast.attributes.forecast_short_term.1}}"
+          forecast: "{{states.sensor.local_forecast.attributes.forecast_zambretti.0}}"
+      - name: Local forecast 3 hour(Imperial)
+        unit_of_measurement: "°F"
+        device_class: 'temperature'
+        availability: "{{ states.sensor.local_forecast.attributes.temperature | is_number }}"
+        icon: "{{states.sensor.local_forecast_zambretti_detail.attributes.icons.0 | lower }}"
+        state: >
+          {{ ((((states.sensor.local_forecast.attributes.temperature|float(states.sensor.local_forecast_temperature.state)) * 1.8) + 32)| round(1)) + (states.sensor.local_forecast_temperaturechange.state |float(0))|round(1)}}
+        attributes:
+          condition: "{{states.sensor.local_forecast_zambretti_detail.attributes.icons.0.replace('mdi:weather-', '',).replace('-',' ')}}"
+          chance_rain: "{{states.sensor.local_forecast_zambretti_detail.attributes.rain_prob.0}}%"
+          time: "{{(as_timestamp(now())+10800) | timestamp_custom('%I:%M %p')}}"
+      - name: Local forecast 6 hour (Imperial)
+        unit_of_measurement: "°F"
+        device_class: 'temperature'
+        availability: "{{ states.sensor.local_forecast.attributes.temperature | is_number }}"
+        icon: "{{states.sensor.local_forecast_zambretti_detail.attributes.icons.1 | lower }}"
+        state: >
+          {{ (((((states.sensor.local_forecast.attributes.temperature|float(states.sensor.local_forecast_temperature.state)) * 1.8) + 32)| round(1)) + (states.sensor.local_forecast_temperaturechange.state |float(0) * 2))|round(1)}}
+        attributes:
+          condition: "{{states.sensor.local_forecast_zambretti_detail.attributes.invert_icons.1.replace('mdi:weather-', '',).replace('-',' ')}}"
+          chance_rain: "{{states.sensor.local_forecast_zambretti_detail.attributes.rain_prob.1}}%"
+          time: "{{(as_timestamp(now())+21600) | timestamp_custom('%I:%M %p')}}" 
+          later: "{{(as_timestamp(now())+43200) | timestamp_custom('%I:%M %p')}}"
+          later_temp: "{{ (((((states.sensor.local_forecast.attributes.temperature|float(states.sensor.local_forecast_temperature.state)) * 1.8) + 32)| round(1)) - (states.sensor.local_forecast_temperaturechange.state |float(0) * 4))|round(1)}}"
 
 # The sampling_size values should add up to slightly less than the amount of sensor updates in the max_age time to work around Home Assistant's statistics integration
 # e.g. a pressure sensor that updates every ~5 seconds in 180 minutes is 2160 updates, -12.5%, gives 1890 samples
